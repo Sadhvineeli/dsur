@@ -3,3 +3,7 @@ num_data <- iris[, 1:4]
 # Correlation matrix cor_matrix
 <- cor(num_data) 
 print(cor_matrix)
+# install.packages("corrplot") # run once if not installed 
+library(corrplot)
+corrplot(cor_matrix, method = "circle", type = "upper", 
+tl.col = "black", tl.cex = 0.8)
