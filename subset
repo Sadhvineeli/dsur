@@ -1,0 +1,2 @@
+subset_data <- subset(iris, Sepal.Length > 5) 
+head(subset_data)
