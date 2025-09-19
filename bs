@@ -1,0 +1,12 @@
+library(ggplot2)
+ggplot(data = iris, aes(x = Species, y = Sepal.Length)) + 
+geom_boxplot() + 
+labs(title = "Sepal Length Distribution by Species", x 
+= "Species", 
+y = "Sepal Length")
+library(ggplot2)
+ggplot(data = iris, aes(x = Petal.Length, y = Petal.Width)) + 
+geom_point(aes(color = Species)) + 
+labs(title = "Petal Length vs. Petal Width by Species", x 
+= "Petal Length", 
+y = "Petal Width")
