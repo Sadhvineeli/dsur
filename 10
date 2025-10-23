@@ -1,0 +1,15 @@
+# 3) 10x10 matrix hierarchical clustering
+set.seed(123)
+m10 <- matrix(rnorm(100), nrow=10, ncol=10)
+rownames(m10) <- paste0("Obs",1:10)
+
+# compute distance on rows and hierarchical clustering (Ward)
+d <- dist(m10) # Euclidean by default
+hc <- hclust(d, method = "ward.D2")
+
+# Plot dendrogram
+plot(hc, main="Hierarchical Clustering Dendrogram (10x10 matrix)")
+rect.hclust(hc, k = 3, border = 2:4) # draw rectangles for k=3 clusters
+
+# cluster assignment
+cutree(hc, k = 3)
