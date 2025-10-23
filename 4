@@ -1,0 +1,27 @@
+# 6) 4x4 matrix and distances
+M <- matrix(c(1,2,3,4,
+              2,3,4,5,
+              5,6,7,8,
+              1,0,1,0), nrow=4, byrow=TRUE)
+rownames(M) <- paste0("v",1:4)
+
+# Euclidean (default dist)
+d_euc <- dist(M, method = "euclidean")
+as.matrix(d_euc)
+
+# Manhattan (cityblock)
+d_man <- dist(M, method = "manhattan")
+as.matrix(d_man)
+
+# Minkowski (p = 3) - using proxy::dist or manual function
+# base R dist doesn't support Minkowski other than these methods; implement p-norm:
+minkowski <- function(a,b,p=3) sum(abs(a-b)^p)^(1/p)
+p <- 3
+mat_idx <- combn(1:nrow(M), 2)
+d_mink <- matrix(0, nrow=nrow(M), ncol=nrow(M))
+for(i in 1:ncol(mat_idx)){
+  r1 <- mat_idx[1,i]; r2 <- mat_idx[2,i]
+  d_mink[r1,r2] <- d_mink[r2,r1] <- minkowski(M[r1,], M[r2,], p)
+}
+rownames(d_mink) <- colnames(d_mink) <- rownames(M)
+d_mink
