@@ -16,3 +16,17 @@ cat("\nCluster sizes:\n")
 print(kmeans_model$size)
 
 iris_data$Cluster <- as.factor(kmeans_model$cluster)
+
+# Hierarchical Clustering
+
+
+dist_matrix <- dist(iris_data[, 1:4])
+
+hc_model <- hclust(dist_matrix, method = "ward.D2")
+
+plot(hc_model, main = "Hierarchical Clustering Dendrogram", xlab = "", sub = "", cex = 0.7)
+
+hc_clusters <- cutree(hc_model, k = 3)
+
+iris_data$HC_Cluster <- as.factor(hc_clusters)
+
