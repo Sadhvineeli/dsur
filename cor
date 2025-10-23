@@ -1,0 +1,13 @@
+# 7) Correlation matrix + plot (using mtcars)
+data(mtcars)
+numeric_df <- mtcars[, sapply(mtcars, is.numeric)]
+
+# correlation matrix
+cor_mat <- cor(numeric_df)
+round(cor_mat, 2)
+
+# Correlation plot (install corrplot if needed)
+if(!require(corrplot)) install.packages("corrplot")
+library(corrlot <- tryCatch(require(corrplot), error=function(e) FALSE))
+library(corrplot)
+corrplot(cor_mat, method = "color", type = "upper", addCoef.col = "black", tl.cex = 0.8)
