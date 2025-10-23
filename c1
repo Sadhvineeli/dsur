@@ -1,0 +1,51 @@
+
+install.packages(c("class", "e1071", "rpart", "caret"))
+
+# Load libraries
+library(class)
+library(e1071)
+library(rpart)
+library(caret)
+# Load dataset
+data(iris)
+head(iris)
+
+
+set.seed(123)
+train_index <- sample(1:nrow(iris), 0.7 * nrow(iris))
+train_data <- iris[train_index, ]
+test_data <- iris[-train_index, ]
+
+library(rpart)
+dt_model <- rpart(Species ~ ., data = train_data, method = "class")
+
+dt_pred <- predict(dt_model, test_data, type = "class")
+
+confusionMatrix(dt_pred, test_data$Species)
+#nb
+nb_model <- naiveBayes(Species ~ ., data = train_data)
+
+nb_pred <- predict(nb_model, test_data)
+
+confusionMatrix(nb_pred, test_data$Species)
+#knn
+normalize <- function(x) { (x - min(x)) / (max(x) - min(x)) }
+iris_norm <- as.data.frame(lapply(iris[, 1:4], normalize))
+iris_norm$Species <- iris$Species
+
+set.seed(123)
+train_index <- sample(1:nrow(iris_norm), 0.7 * nrow(iris_norm))
+train_knn <- iris_norm[train_index, ]
+test_knn <- iris_norm[-train_index, ]
+
+knn_pred <- knn(train = train_knn[, 1:4],
+                test = test_knn[, 1:4],
+                cl = train_knn$Species,
+                k = 5)
+
+confusionMatrix(knn_pred, test_knn$Species)
+#svm
+svm_model <- svm(Species ~ ., data = train_data, kernel = "linear")
+svm_pred <- predict(svm_model, test_data)
+confusionMatrix(svm_pred, test_data$Species)
+
