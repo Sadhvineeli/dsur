@@ -1,1 +1,20 @@
 
+data("mtcars")
+
+head(mtcars)
+
+model_multi <- lm(mpg ~ hp + wt + cyl, data = mtcars)
+
+summary(model_multi)
+
+cat("\nModel Diagnostics:\n")
+cat("R-squared:", summary(model_multi)$r.squared, "\n")
+cat("Adjusted R-squared:", summary(model_multi)$adj.r.squared, "\n")
+
+
+plot(mtcars$mpg, fitted(model_multi),
+     xlab = "Actual MPG", ylab = "Fitted MPG",
+     main = "Actual vs Fitted MPG",
+     pch = 19, col = "blue")
+abline(a = 0, b = 1, col = "red", lwd = 2)
+
