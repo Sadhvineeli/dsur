@@ -1,0 +1,28 @@
+
+hw_model <- HoltWinters(ts_data)
+
+
+print(hw_model)
+
+hw_forecast <- forecast::forecast(hw_model, h = 12)
+
+
+plot(hw_forecast,
+     main = "Holt-Winters Exponential Smoothing Forecast",
+     ylab = "Passengers", xlab = "Year")
+
+install.packages("forecast")
+library(forecast)
+
+arima_model <- auto.arima(ts_data)
+
+
+summary(arima_model)
+
+
+arima_forecast <- forecast(arima_model, h = 12)
+
+
+plot(arima_forecast,
+     main = "ARIMA Model Forecast (AirPassengers)",
+     ylab = "Passengers", xlab = "Year")
