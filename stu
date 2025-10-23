@@ -1,0 +1,17 @@
+# 4) Create student.csv and linear regression
+set.seed(123)
+student <- data.frame(
+  HoursStudied = round(runif(10, 1, 10),1),
+  ExamScore = round(10 + 6*runif(10,1,10) + rnorm(10,0,5)) # synthetic relation
+)
+write.csv(student, "student.csv", row.names = FALSE)
+
+# Read back and model
+stu <- read.csv("student.csv")
+lm_stu <- lm(ExamScore ~ HoursStudied, data = stu)
+summary(lm_stu)
+
+# Plot with regression line
+plot(stu$HoursStudied, stu$ExamScore, pch=19,
+     xlab="Hours Studied", ylab="Exam Score", main="Exam Score vs Hours Studied")
+abline(lm_stu, col="red", lwd=2)
