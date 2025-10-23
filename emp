@@ -1,0 +1,21 @@
+# 1) Employee dataset + logistic regression (predict promotion: 1/0)
+set.seed(123)
+emp <- data.frame(
+  EmpID = 1:30,
+  Age = sample(22:55, 30, replace = TRUE),
+  Experience = sample(0:30, 30, replace = TRUE),
+  Dept = sample(c("HR","Sales","IT","Finance"), 30, replace = TRUE),
+  Salary = sample(30000:120000, 30, replace = TRUE)
+)
+# Create a binary target (Promoted) using a logistic-like rule + noise
+emp$Promoted <- with(emp, ifelse(0.00005*Salary + 0.03*Experience - 0.02*Age + rnorm(30) > 0.5, 1, 0))
+emp$Dept <- as.factor(emp$Dept)
+
+# Fit logistic regression
+model_emp <- glm(Promoted ~ Age + Experience + Salary + Dept, data = emp, family = binomial)
+summary(model_emp)
+
+# Predictions & confusion at 0.5 cutoff
+prob_emp <- predict(model_emp, type = "response")
+pred_emp <- ifelse(prob_emp > 0.5, 1, 0)
+table(Predicted = pred_emp, Actual = emp$Promoted)
