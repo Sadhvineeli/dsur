@@ -1,0 +1,10 @@
+# 2) 6x4 matrix -> kmeans clustering into 3 clusters
+set.seed(123)
+mat <- matrix(rnorm(24, mean=5, sd=2), nrow=6, ncol=4)
+rownames(mat) <- paste0("R", 1:6)
+colnames(mat) <- paste0("F", 1:4)
+
+# kmeans (k = 3)
+kres <- kmeans(mat, centers = 3, nstart = 20)
+kres$cluster
+kres$centers
