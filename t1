@@ -1,0 +1,21 @@
+
+
+
+data("AirPassengers")
+ts_data <- AirPassengers
+
+print(start(ts_data))
+print(end(ts_data))
+print(frequency(ts_data))
+
+plot(ts_data,
+     main = "AirPassengers Time Series Data (1949–1960)",
+     xlab = "Year",
+     ylab = "Number of Passengers",
+     col = "blue",
+     lwd = 2)
+
+
+lines(ma(ts_data, order = 12), col = "red", lwd = 2)
+legend("topleft", legend = c("Passengers", "12-Month Moving Avg"),
+       col = c("blue", "red"), lwd = 2)
