@@ -1,0 +1,22 @@
+# 5) Height -> Weight linear model
+height <- c(150, 160, 155, 170, 165, 180, 175, 158, 162, 168) # cm
+weight <- c(52, 60, 55, 72, 66, 85, 78, 57, 61, 69) # kg
+df_hw <- data.frame(Height = height, Weight = weight)
+
+lm_hw <- lm(Weight ~ Height, data = df_hw)
+summary(lm_hw)
+
+# Predict for new heights
+new_heights <- data.frame(Height = c(145, 172, 185))
+preds <- predict(lm_hw, newdata = new_heights, interval = "prediction")
+cbind(new_heights, preds)
+
+# Visualization with regression and prediction intervals
+plot(df_hw$Height, df_hw$Weight, pch=19, xlab="Height (cm)", ylab="Weight (kg)", main="Height vs Weight")
+abline(lm_hw, col="blue", lwd=2)
+# add prediction ribbon
+newx <- seq(min(df_hw$Height)-5, max(df_hw$Height)+5, length=100)
+pred_all <- predict(lm_hw, newdata = data.frame(Height=newx), interval = "prediction")
+lines(newx, pred_all[,2], lty=2) # lower
+lines(newx, pred_all[,3], lty=2) # upper
+points(new_heights$Height, preds[,1], col="red", pch=17)
